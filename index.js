@@ -4,10 +4,10 @@ const winston = require('winston');
 const app = express();
 const port = 3000;
 
-// 解析 JSON 请求
+// Parse JSON requests
 app.use(express.json());
 
-// 配置日志
+// Configure logging
 const logger = winston.createLogger({
     level: 'info',
     format: winston.format.combine(
@@ -20,13 +20,13 @@ const logger = winston.createLogger({
     ]
 });
 
-// **日志记录中间件，放到所有路由之前**
+// **Logging middleware, placed before all routes**
 app.use((req, res, next) => {
     logger.info(`Request: ${req.method} ${req.url} from ${req.ip}`);
     next();
 });
 
-// 加法
+// Addition
 app.get('/add', (req, res) => {
     const { num1, num2 } = req.query;
     if (!num1 || !num2 || isNaN(num1) || isNaN(num2)) {
@@ -38,7 +38,7 @@ app.get('/add', (req, res) => {
     res.json({ result });
 });
 
-// 减法
+// Subtraction
 app.get('/subtract', (req, res) => {
     const { num1, num2 } = req.query;
     if (!num1 || !num2 || isNaN(num1) || isNaN(num2)) {
@@ -50,7 +50,7 @@ app.get('/subtract', (req, res) => {
     res.json({ result });
 });
 
-// 乘法
+// Multiplication
 app.get('/multiply', (req, res) => {
     const { num1, num2 } = req.query;
     if (!num1 || !num2 || isNaN(num1) || isNaN(num2)) {
@@ -62,7 +62,7 @@ app.get('/multiply', (req, res) => {
     res.json({ result });
 });
 
-// 除法
+// Division
 app.get('/divide', (req, res) => {
     const { num1, num2 } = req.query;
     if (!num1 || !num2 || isNaN(num1) || isNaN(num2)) {
@@ -78,7 +78,7 @@ app.get('/divide', (req, res) => {
     res.json({ result });
 });
 
-// 新增的高级算术操作：指数运算
+// New advanced arithmetic operation: Exponentiation
 app.get('/exponentiation', (req, res) => {
     const { base, exponent } = req.query;
     if (!base || !exponent || isNaN(base) || isNaN(exponent)) {
@@ -90,7 +90,7 @@ app.get('/exponentiation', (req, res) => {
     res.json({ result });
 });
 
-// 新增的高级算术操作：平方根
+// New advanced arithmetic operation: Square Root
 app.get('/sqrt', (req, res) => {
     const { number } = req.query;
     if (!number || isNaN(number) || parseFloat(number) < 0) {
@@ -102,7 +102,7 @@ app.get('/sqrt', (req, res) => {
     res.json({ result });
 });
 
-// 新增的高级算术操作：取模运算
+// New advanced arithmetic operation: Modulo
 app.get('/modulo', (req, res) => {
     const { dividend, divisor } = req.query;
     if (!dividend || !divisor || isNaN(dividend) || isNaN(divisor)) {
@@ -118,7 +118,7 @@ app.get('/modulo', (req, res) => {
     res.json({ result });
 });
 
-// 服务器监听端口
+// Server listening on the port
 app.listen(port, () => {
     logger.info(`Calculator microservice running at http://localhost:${port}`);
 });
